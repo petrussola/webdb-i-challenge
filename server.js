@@ -11,7 +11,18 @@ server.use(express.json());
 // GET METHOD
 
 server.get("/", (req, res) => {
+  const { limit, sortby, sortdir } = req.query;
   db("accounts")
+    .modify(queryBuilder => {
+      if (sortby) {
+        queryBuilder.orderBy(sortby, sortdir);
+      }
+    })
+    .modify(queryBuilder => {
+      if (limit) {
+        queryBuilder.limit(limit);
+      }
+    })
     .then(data => {
       res.status(200).json(data);
     })
