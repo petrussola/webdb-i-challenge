@@ -37,4 +37,17 @@ server.get("/:id", (req, res) => {
     });
 });
 
+// POST METHOD
+
+server.post("/", (req, res) => {
+  db("accounts")
+    .insert(req.body)
+    .then(data => {
+      res.status(200).json({...req.body, id: data[0]});
+    })
+    .catch(error => {
+      console.log(error.message);
+    });
+});
+
 module.exports = server;
