@@ -68,4 +68,20 @@ server.delete("/:id", (req, res) => {
     });
 });
 
+// PUT METHOD
+
+server.put("/:id", (req, res) => {
+  db("accounts")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(data => {
+      res.status(200).json(`${data} account got edited`);
+    })
+    .catch(error => {
+      res
+        .status(500)
+        .json({ message: `could not delet account ${id}: ${error.message}` });
+    });
+});
+
 module.exports = server;
